@@ -11,18 +11,23 @@ export function Table({ title, columnsTitles, rowValues }: ITable) {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            {columnsTitles.map((item) => (
-              <th scope="col" className="px-6 py-3">
+            {columnsTitles.map((item, index) => (
+              <th scope="col" className="px-6 py-3" key={index}>
                 {item}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {rowValues.map((item) => (
-            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              {Object.keys(item).map((key: any) => (
-                <td className="px-6 py-4">{item[key]}</td>
+          {rowValues.map((item, index) => (
+            <tr
+              className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+              key={index}
+            >
+              {Object.keys(item).map((key: any, index: number) => (
+                <td className="px-6 py-4" key={index}>
+                  {item[key]}
+                </td>
               ))}
             </tr>
           ))}

@@ -31,3 +31,45 @@ body {
     text-wrap: balance;
   }
 }
+
+#main {
+  margin-top: 4rem;
+  padding: 1rem;
+}
+
+#content {
+  min-height: calc(100vh - 6rem);
+  width: calc(100vw - 2rem);
+  overflow: auto;
+}
+
+@media (min-width: 1024px) {
+  #main {
+    margin-left: 12rem;
+  }
+  #content {
+    width: calc(100vw - 14rem);
+  }
+}
+
+/* CUSTOM SCROLLBAR */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: rgb(163 179 188/1);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(163 179 188/1);
+  border-radius: 14px;
+  border: 3px solid white;
+}

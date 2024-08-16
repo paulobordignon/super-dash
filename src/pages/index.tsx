@@ -33,7 +33,9 @@ export default function Home() {
       });
   };
 
-  console.log(data);
+  const getWinnerByYear = async () => {};
+
+  const tableMenu = <div></div>;
 
   return (
     <div className="flex gap-4 flex-wrap">
