@@ -1,17 +1,16 @@
-import { Card, Table } from "@/components";
 import { useEffect, useState } from "react";
+import { Card, Table } from "@/components";
 
 export default function Home() {
-  const [data, setData] = useState<any>({});
-  const [winnerByYear, setWinnerByYear] = useState();
+  const apiHost = process.env.NEXT_PUBLIC_API_HOST;
+  const [data, setData] = useState<any>([]);
+  const [winnerByYear, setWinnerByYear] = useState<any>();
 
   useEffect(() => {
     getInitialData();
   }, []);
 
   const getInitialData = async () => {
-    const apiHost = "https://tools.outsera.com/backend-java/api/movies";
-
     Promise.all([
       fetch(`${apiHost}?projection=years-with-multiple-winners`),
       fetch(`${apiHost}?projection=studios-with-win-count`),
@@ -33,14 +32,23 @@ export default function Home() {
       });
   };
 
-  const getWinnerByYear = async () => {};
+  const getWinnerByYear = async (year: string) => {
+    try {
+      const response = await fetch(`${apiHost}?winner=true&year=${year}`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
 
-  const tableMenu = <div></div>;
+      setWinnerByYear(await response.json());
+    } catch (error: any) {
+      console.error(error?.message);
+    }
+  };
 
   return (
     <div className="flex gap-4 flex-wrap">
       {data?.yearsMultipleWinners?.length && (
-        <div className="basis-1/3 grow">
+        <div className="lg:basis-1/3 grow">
           <Card title="List years with multiple winners">
             <Table
               columnsTitles={["Year", "Win Count"]}
@@ -50,7 +58,7 @@ export default function Home() {
         </div>
       )}
       {data?.studiosWinCount?.length && (
-        <div className="basis-1/3 grow">
+        <div className="lg:basis-1/3 grow">
           <Card title="Top 3 studios with winners">
             <Table
               columnsTitles={["Name", "Win Count"]}
@@ -61,7 +69,7 @@ export default function Home() {
       )}
       {(data?.producersWinsInterval?.min?.length ||
         data?.producersWinsInterval?.max?.length) && (
-        <div className="basis-1/3 grow">
+        <div className="lg:basis-1/3 grow">
           <Card title="Top 3 studios with winners">
             <>
               {data?.producersWinsInterval?.max?.length && (
@@ -92,6 +100,25 @@ export default function Home() {
           </Card>
         </div>
       )}
+      <div className="lg:basis-1/3 grow">
+        <Card title="List movie winners by year">
+          <Table
+            filterElement={
+              <select
+                className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                onChange={(e) => getWinnerByYear(e.target.value)}
+              >
+                <option value="">Search by year</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+              </select>
+            }
+            columnsTitles={["Id", "Year", "Title"]}
+            rowValues={winnerByYear}
+          />
+        </Card>
+      </div>
     </div>
   );
 }

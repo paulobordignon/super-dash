@@ -8,6 +8,8 @@ First, install the dependencies:
 npm install
 ```
 
+Set the value of the env variable in the .env file.
+
 Run the development server:
 
 ```bash
@@ -15,3 +17,9 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the project.
+
+To run the tests:
+
+```bash
+npm run cypress:open
+```
