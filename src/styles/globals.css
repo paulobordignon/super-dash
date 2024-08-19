@@ -34,18 +34,18 @@ body {
 
 #main {
   margin-top: 4rem;
-  padding: 1rem;
 }
 
 #content {
   min-height: calc(100vh - 6rem);
-  width: calc(100vw - 2rem);
+  width: 100%;
   overflow: auto;
 }
 
 @media (min-width: 1024px) {
   #main {
     margin-left: 12rem;
+    padding: 1rem;
   }
   #content {
     width: calc(100vw - 14rem);

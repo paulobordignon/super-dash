@@ -4,36 +4,46 @@ import { Card, Table } from "@/components";
 export default function List() {
   const apiHost = process.env.NEXT_PUBLIC_API_HOST;
   const [data, setData] = useState<any>([]);
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>();
+  const [pageNumber, setPageNumber] = useState<number>(0);
   const [filterWinner, setFilterWinner] = useState<string>("");
   const [filterYear, setFilterYear] = useState<string>("");
-  const [filteredQueryString, setFilteredQueryString] = useState<String>("");
 
   useEffect(() => {
     const queryString = `?page=${pageNumber}&size=99${
       filterWinner.length ? `&winner=${filterWinner}` : ""
     }${filterYear.length === 4 ? `&year=${filterYear}` : ""}`;
 
-    if (queryString !== filteredQueryString) {
-      getData(queryString);
-    }
+    getData(queryString);
   }, [pageNumber, filterWinner, filterYear]);
 
   const getData = async (queryString: string) => {
     try {
-      const response = await fetch(`${apiHost}${queryString}`);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
+      //TODO: IMPLEMENT A CACHE ON FRONT SIDE TO AVOID MANY REQUESTS.
+      await fetch(`${apiHost}${queryString}`)
+        .then(async (res) => {
+          const { content, totalPages } = await res.json();
 
-      setData(await response.json());
-      setFilteredQueryString(queryString);
+          setTotalPages(totalPages);
+          setData(
+            content.map(({ id, year, title, winner }: any) => {
+              return { id, year, title, winner: winner ? "Yes" : "No" };
+            })
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } catch (error: any) {
       console.error(error?.message);
     }
   };
 
-  return data?.length ? (
+  const handlePageNumber = (number: number) => {
+    setPageNumber(number);
+  };
+
+  return (
     <Card title="List movies">
       <Table
         filterElement={
@@ -57,9 +67,9 @@ export default function List() {
         }
         columnsTitles={["Id", "Year", "Title", "Winner?"]}
         rowValues={data}
+        totalPages={totalPages}
+        changePage={handlePageNumber}
       />
     </Card>
-  ) : (
-    <></>
   );
 }

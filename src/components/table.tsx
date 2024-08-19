@@ -3,6 +3,8 @@ interface ITable {
   filterElement?: JSX.Element;
   columnsTitles: string[];
   rowValues: string[];
+  totalPages?: number;
+  changePage?: (number: number) => void;
 }
 
 export function Table({
@@ -10,9 +12,11 @@ export function Table({
   filterElement,
   columnsTitles,
   rowValues,
+  totalPages,
+  changePage,
 }: ITable) {
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="relative overflow-x-auto sm:rounded-lg">
       <p className="my-4 text-lg text-gray-900 dark:text-gray-100">{title}</p>
       {filterElement && (
         <div className="rounded-lg border-gray-200 dark:border-gray-700 border p-2 mb-2">
@@ -45,6 +49,24 @@ export function Table({
           ))}
         </tbody>
       </table>
+      {totalPages ? (
+        <nav className="flex justify-center mt-2">
+          <ul className="flex items-center h-8 text-sm">
+            {Array.from(Array(totalPages)).map((_, index): any => (
+              <li key={index}>
+                <a
+                  onClick={() => (changePage ? changePage(index) : {})}
+                  className="cursor-pointer flex items-center justify-center px-3 h-8 text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  {index + 1}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
