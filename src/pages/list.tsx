@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Card, Table } from "@/components";
+import { IMovie } from "@/types";
 
 export default function List() {
   const apiHost = process.env.NEXT_PUBLIC_API_HOST;
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<IMovie[]>([]);
   const [totalPages, setTotalPages] = useState<number>();
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [filterWinner, setFilterWinner] = useState<string>("");
@@ -26,7 +27,7 @@ export default function List() {
 
           setTotalPages(totalPages);
           setData(
-            content.map(({ id, year, title, winner }: any) => {
+            content.map(({ id, year, title, winner }: IMovie) => {
               return { id, year, title, winner: winner ? "Yes" : "No" };
             })
           );

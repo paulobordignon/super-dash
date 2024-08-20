@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Card, Table } from "@/components";
+import { IMovie, IDashboardData } from "@/types";
 
 export default function Home() {
   const apiHost = process.env.NEXT_PUBLIC_API_HOST;
-  const [data, setData] = useState<any>([]);
-  const [winnerByYear, setWinnerByYear] = useState<any>();
+  const [data, setData] = useState<IDashboardData>();
+  const [winnerByYear, setWinnerByYear] = useState<IMovie[]>();
 
   useEffect(() => {
     getInitialData();
@@ -39,7 +40,11 @@ export default function Home() {
         throw new Error(`Response status: ${response.status}`);
       }
 
-      setWinnerByYear(await response.json());
+      setWinnerByYear(
+        (await response.json()).map(({ id, year, title }: IMovie) => {
+          return { id, year, title };
+        })
+      );
     } catch (error: any) {
       console.error(error?.message);
     }

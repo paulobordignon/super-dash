@@ -2,7 +2,7 @@ interface ITable {
   title?: string;
   filterElement?: JSX.Element;
   columnsTitles: string[];
-  rowValues: string[];
+  rowValues?: any[];
   totalPages?: number;
   changePage?: (number: number) => void;
 }
