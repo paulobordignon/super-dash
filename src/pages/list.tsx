@@ -13,7 +13,7 @@ export default function List() {
   useEffect(() => {
     const queryString = `?page=${pageNumber}&size=99${
       filterWinner.length ? `&winner=${filterWinner}` : ""
-    }${filterYear.length === 4 ? `&year=${filterYear}` : ""}`;
+    }${filterYear.length ? `&year=${filterYear}` : ""}`;
 
     getData(queryString);
   }, [pageNumber, filterWinner, filterYear]);

@@ -75,7 +75,7 @@ export default function Home() {
       {(data?.producersWinsInterval?.min?.length ||
         data?.producersWinsInterval?.max?.length) && (
         <div className="lg:basis-1/3 grow">
-          <Card title="Top 3 studios with winners">
+          <Card title="Producers with longest and shortest interval between wins">
             <>
               {data?.producersWinsInterval?.max?.length && (
                 <Table
@@ -109,15 +109,12 @@ export default function Home() {
         <Card title="List movie winners by year">
           <Table
             filterElement={
-              <select
-                className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              <input
+                type="number"
+                placeholder="Filter by year"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                 onChange={(e) => getWinnerByYear(e.target.value)}
-              >
-                <option value="">Search by year</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-              </select>
+              />
             }
             columnsTitles={["Id", "Year", "Title"]}
             rowValues={winnerByYear}
