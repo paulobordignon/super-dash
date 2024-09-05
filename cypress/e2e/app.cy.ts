@@ -1,5 +1,5 @@
 describe("Navigation", () => {
-  it("should navigate to the about page", () => {
+  it("should navigate among the pages", () => {
     // Start from the index page
     cy.visit("/");
 

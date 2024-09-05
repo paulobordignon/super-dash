@@ -1,0 +1,21 @@
+{
+  "table1": {
+    "title": "Title Test",
+    "columnsTitles": ["id", "title"],
+    "rowValues": [
+      { "id": 1, "title": "Title 1" },
+      { "id": 2, "title": "Title 2" }
+    ]
+  },
+  "table2": {
+    "title": "Table 2 teste",
+    "columnsTitles": ["id", "title", "winner"],
+    "rowValues": [
+      { "id": 1, "title": "Title 1", "winner": true },
+      { "id": 2, "title": "Title 2", "winner": false },
+      { "id": 5, "title": "Title 4", "winner": true },
+      { "id": 10, "title": "Title 3", "winner": true }
+    ],
+    "totalPages": 2
+  }
+}

@@ -7,4 +7,11 @@ export default defineConfig({
     viewportWidth: 1366,
     setupNodeEvents(on, config) {},
   },
+
+  component: {
+    devServer: {
+      framework: "next",
+      bundler: "webpack",
+    },
+  },
 });
